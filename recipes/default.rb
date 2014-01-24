@@ -77,20 +77,6 @@ environment_item = bag_item(
 merged_item = (walk default_item["content"]).update (walk environment_item["content"])
 content = dump_hash merged_item
 
-group node["envbuilder"]["group"] do
-  action :create
-end
-
-user node["envbuilder"]["owner"] do
-  gid node["envbuilder"]["group"]
-  shell "/bin/bash"
-  home "/home/%s" % [
-      node["envbuilder"]["owner"]
-  ]
-  supports :manage_home => true
-  action :create
-end
-
 directory node["envbuilder"]["base_dir"] do
   mode "0755"
   owner node["envbuilder"]["owner"]
