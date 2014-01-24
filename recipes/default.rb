@@ -74,11 +74,11 @@ environment_item = bag_item(
   node["ENV"] || node.chef_environment
 )
 
-merged_item = (walk default_item["content"]).update (walk environment_item["content"])
-content = dump_hash merged_item
+merged_item  = (walk default_item["content"]).update (walk environment_item["content"])
+file_content = dump_hash merged_item
 
-directory node["envbuilder"]["base_dir"] do
-  mode "0755"
+directory File.dirname(node["envbuilder"]["filename"]) do
+  mode  node["envbuilder"]["file_permissions"]
   owner node["envbuilder"]["owner"]
   group node["envbuilder"]["group"]
 
@@ -86,14 +86,11 @@ directory node["envbuilder"]["base_dir"] do
   action :create
 end
 
-file File.join(
-         node["envbuilder"]["base_dir"],
-         node["envbuilder"]["filename"]
-     ) do
-  mode node["envbuilder"]["file_permissions"]
+file node["envbuilder"]["filename"] do
+  content file_content
+  mode  node["envbuilder"]["file_permissions"]
   owner node["envbuilder"]["owner"]
   group node["envbuilder"]["group"]
 
   action :create
-  content content
 end

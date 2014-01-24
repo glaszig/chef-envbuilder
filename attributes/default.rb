@@ -1,5 +1,4 @@
-default["envbuilder"]["base_dir"] = "/home/env"
-default["envbuilder"]["filename"] = "env"
+default["envbuilder"]["filename"] = "/home/env/env"
 default["envbuilder"]["owner"] = "root"
 default["envbuilder"]["group"] = "root"
 default["envbuilder"]["data_bag"] = "envs"
