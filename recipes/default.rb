@@ -64,10 +64,14 @@ def bag_item(bag_name, item_name)
   end
 end
 
-default_item = bag_item(
-  node["envbuilder"]["data_bag"],
-  node["envbuilder"]["base_dbi"]
-)
+default_item = begin
+  bag_item(
+    node["envbuilder"]["data_bag"],
+    node["envbuilder"]["default_bag_item"]
+  )
+rescue Chef::Exceptions::ValidationFailed
+  {}
+end
 
 environment_item = bag_item(
   node["envbuilder"]["data_bag"],
